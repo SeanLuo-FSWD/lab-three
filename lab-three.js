@@ -158,7 +158,7 @@ function getDayOfTheWeekForUserDate() {
 function makeCalendar() {
   var months = new Map([
     [1, 31],
-    [2, 28],
+    [2, 29],
     [3, 31],
     [4, 30],
     [5, 31],
