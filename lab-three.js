@@ -110,26 +110,6 @@ function findDayOfWeek(year, month, day) {
 
   var dayOfWeekInt = sum % 7;
 
-  // console.log(
-  //   "isLeapYear " +
-  //     isLeapYear +
-  //     " first2DigitsYear " +
-  //     first2DigitsYear +
-  //     " last2DigitsYear " +
-  //     last2DigitsYear +
-  //     " : " +
-  //     "yearByTwelveVar " +
-  //     yearByTwelveVar +
-  //     " moduloByTwelveVar " +
-  //     moduloByTwelveVar +
-  //     " foursInRemainderVar " +
-  //     foursInRemainderVar +
-  //     " monthCodeVar " +
-  //     monthCodeVar +
-  //     " dayIntVar " +
-  //     dayIntVar
-  // );
-
   return (function () {
     switch (dayOfWeekInt) {
       case 0:
@@ -194,11 +174,10 @@ function makeCalendar() {
   months.forEach(function (value, key) {
     for (let i = 1; i <= value; i++) {
       console.log(
-        key + "-" + i + "-" + "2019" + " is a " + findDayOfWeek(2019, key, i)
+        key + "-" + i + "-" + "2020" + " is a " + findDayOfWeek(2020, key, i)
       );
     }
   });
 }
 
-makeCalendar();
-// getDayOfTheWeekForUserDate();
+module.exports = { makeCalendar, getDayOfTheWeekForUserDate };
