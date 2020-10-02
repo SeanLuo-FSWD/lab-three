@@ -1,53 +1,55 @@
 const readlineSync = require("readline-sync");
 
-var userInput;
-var yearByTwelveVar;
-var moduloByTwelveVar;
-var foursInRemainderVar;
-var dayIntVar;
-var monthCodeVar;
-var first2DigitsYear;
-var last2DigitsYear;
-var isLeapYear = false;
+let userInput;
+let yearByTwelveVar;
+let moduloByTwelveVar;
+let foursInRemainderVar;
+let dayIntVar;
+let monthCodeVar;
+let first2DigitsYear;
+let last2DigitsYear;
+let isLeapYearVar = false;
 
-var helperFunctions = {
-  prep: function (year) {
-    last2DigitsYear = year.toString().substring(2);
-    first2DigitsYear = year.toString().substring(0, 2);
-    isLeapYear = (function () {
-      if (year % 4 == 0) {
-        if (last2DigitsYear == 0) {
-          if (year % 400 == 0) {
-            return true;
-          }
-          return false;
-        }
+const isLeapYear = function(year) {
+  if (year % 4 == 0) {
+    if (last2DigitsYear == 0) {
+      if (year % 400 == 0) {
         return true;
       }
       return false;
-    })();
+    }
+    return true;
+  }
+  return false;
+}
+
+const helperFunctions = {
+  initializeVars(year) {
+    last2DigitsYear = year.toString().substring(2);
+    first2DigitsYear = year.toString().substring(0, 2);
+    isLeapYearVar = isLeapYear(year);
   },
   // step 1
-  yearByTwelve: function () {
-    var twelves = parseInt(last2DigitsYear) / 12;
+  yearByTwelve() {
+    let twelves = parseInt(last2DigitsYear) / 12;
     yearByTwelveVar = Math.floor(twelves);
   },
   // step 2
-  moduloByTwelve: function () {
-    var modulo = parseInt(last2DigitsYear) % 12;
+  moduloByTwelve() {
+    let modulo = parseInt(last2DigitsYear) % 12;
     moduloByTwelveVar = modulo;
   },
   // step 3
-  foursInRemainder: function () {
+  foursInRemainder() {
     foursInRemainderVar = Math.floor(moduloByTwelveVar / 4);
   },
   // step 4
-  dayInt: function (day) {
+  dayInt(day) {
     dayIntVar = parseInt(day);
   },
   // step 5
-  monthCode: function (month) {
-    var monthInput;
+  monthCode(month) {
+    let monthInput;
     switch (month) {
       case 4:
       case 7:
@@ -76,7 +78,7 @@ var helperFunctions = {
         monthInput = 6;
         break;
     }
-    if ((month == 1 || month == 2) && isLeapYear) {
+    if ((month == 1 || month == 2) && isLeapYearVar) {
       monthInput -= 1;
     }
     if (first2DigitsYear == "16" || first2DigitsYear == "20") {
@@ -93,22 +95,24 @@ var helperFunctions = {
   },
 };
 
-function findDayOfWeek(year, month, day) {
-  helperFunctions.prep(year);
-  helperFunctions.yearByTwelve(year);
-  helperFunctions.moduloByTwelve(year);
-  helperFunctions.foursInRemainder();
-  helperFunctions.monthCode(month);
-  helperFunctions.dayInt(day);
+const {initializeVars,yearByTwelve,moduloByTwelve,foursInRemainder,monthCode,dayInt} = helperFunctions;
 
-  var sum =
+function findDayOfWeek(year, month, day) {
+  initializeVars(year);
+  yearByTwelve(year);
+  moduloByTwelve(year);
+  foursInRemainder();
+  monthCode(month);
+  dayInt(day);
+
+  let sum =
     yearByTwelveVar +
     moduloByTwelveVar +
     foursInRemainderVar +
     monthCodeVar +
     dayIntVar;
 
-  var dayOfWeekInt = sum % 7;
+  let dayOfWeekInt = sum % 7;
 
   return (function () {
     switch (dayOfWeekInt) {
@@ -131,32 +135,35 @@ function findDayOfWeek(year, month, day) {
 }
 
 function getDayOfTheWeek(year, month, day) {
-  var year = parseInt(year);
-  var month = parseInt(month);
-  var day = parseInt(day);
+  let yyyy = parseInt(year);
+  let mm = parseInt(month);
+  let dd = parseInt(day);
 
   console.log(
     "You have entered " +
       userInput +
       ", which is a " +
-      findDayOfWeek(year, month, day)
+      findDayOfWeek(yyyy, mm, dd)
   );
+
+  getDayOfTheWeekForUserDate();
 }
 
 function getDayOfTheWeekForUserDate() {
+
   userInput = readlineSync.question(
     "Please input date in the format MM-DD-YYYY : "
   );
-  var inputArray = userInput.split("-");
-  var month = parseInt(inputArray[0]);
-  var day = parseInt(inputArray[1]);
-  var year = parseInt(inputArray[2]);
+  let inputArray = userInput.split("-");
+  let month = parseInt(inputArray[0]);
+  let day = parseInt(inputArray[1]);
+  let year = parseInt(inputArray[2]);
 
   getDayOfTheWeek(year, month, day);
 }
 
 function makeCalendar() {
-  var months = new Map([
+  let months = new Map([
     [1, 31],
     [2, 29],
     [3, 31],
