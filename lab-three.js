@@ -10,7 +10,7 @@ let first2DigitsYear;
 let last2DigitsYear;
 let isLeapYearVar = false;
 
-const isLeapYear = function(year) {
+const isLeapYear = function (year) {
   if (year % 4 == 0) {
     if (last2DigitsYear == 0) {
       if (year % 400 == 0) {
@@ -21,7 +21,7 @@ const isLeapYear = function(year) {
     return true;
   }
   return false;
-}
+};
 
 const helperFunctions = {
   initializeVars(year) {
@@ -95,7 +95,14 @@ const helperFunctions = {
   },
 };
 
-const {initializeVars,yearByTwelve,moduloByTwelve,foursInRemainder,monthCode,dayInt} = helperFunctions;
+const {
+  initializeVars,
+  yearByTwelve,
+  moduloByTwelve,
+  foursInRemainder,
+  monthCode,
+  dayInt,
+} = helperFunctions;
 
 function findDayOfWeek(year, month, day) {
   initializeVars(year);
@@ -150,7 +157,6 @@ function getDayOfTheWeek(year, month, day) {
 }
 
 function getDayOfTheWeekForUserDate() {
-
   userInput = readlineSync.question(
     "Please input date in the format MM-DD-YYYY : "
   );
